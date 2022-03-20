@@ -47,7 +47,7 @@ main() {
 
     # PROJECT DIR
     #
-    export PROJECT=zebrium
+    export PROJECT=github.com/elastic
 
     export GOPATH=${GOPATH:-${HOME}/go}
     if ! $DO_UPDATE; then
@@ -63,8 +63,13 @@ main() {
     $DO_UPDATE || git init
     $DO_UPDATE || git remote add origin https://github.com/elastic/beats.git
     $DO_UPDATE || git fetch origin 8a60ca922f57a3ebb75e93d686a98edf83c766da
+    $DO_UPDATE || git reset --hard FETCH_HEAD
+    cd metricbeat
     $DO_UPDATE || git clone ${GIT_REPO_BASE_URL}/zebeat.git
+    $DO_UPDATE || rm -rf module modules.d
     $DO_UPDATE || mv zebeat module
+    $DO_UPDATE || mkdir modules.d
+    $DO_UPDATE || cp module/zebrium/_meta/config.yml modules.d/zebrium.yml
     go install
     exit
 
