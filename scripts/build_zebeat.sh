@@ -66,7 +66,7 @@ main() {
     $DO_UPDATE || git reset --hard FETCH_HEAD
     cd metricbeat
     $DO_UPDATE || git clone ${GIT_REPO_BASE_URL}/zebeat.git
-    $DO_UPDATE || cp zebeat/zebrium module
+    $DO_UPDATE || mv zebeat/zebrium module
     $DO_UPDATE || rm -rf modules.d
     $DO_UPDATE || mkdir modules.d
     $DO_UPDATE || cp module/zebrium/_meta/config.yml modules.d/zebrium.yml
