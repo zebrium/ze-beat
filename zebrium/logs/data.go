@@ -25,26 +25,7 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/elastic/beats/v7/libbeat/common"
-	s "github.com/elastic/beats/v7/libbeat/common/schema"
-	c "github.com/elastic/beats/v7/libbeat/common/schema/mapstriface"
 	"github.com/elastic/beats/v7/metricbeat/mb"
-)
-
-var (
-	schema = s.Schema{
-		"customer":      c.Str("customer"),
-		"deployment_id": c.Str("deployment_id"),
-		"service_group": c.Str("service_group"),
-		"total": s.Object{
-			"count": c.Int("total_count"),
-		},
-		"errors": s.Object{
-			"count": c.Int("errors_count"),
-		},
-		"anomalies": s.Object{
-			"count": c.Int("anomalies_count"),
-		},
-	}
 )
 
 type StatsMi struct {
