@@ -1,0 +1,6 @@
+- key: zebrium
+  title: "Zebrium"
+  description: >
+    Zebrium module
+  release: ga
+  settings: ["ssl", "http"]

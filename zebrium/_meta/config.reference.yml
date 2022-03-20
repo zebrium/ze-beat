@@ -1,0 +1,8 @@
+- module: zebrium
+  metricsets:
+    - "logs"
+    - "detections"
+  enabled: true
+  period: 10s
+  hosts: ["https://pc-alan.eng.zebrium.com:4000/delta"]
+  access_tokens_file: "mytokens.yml"

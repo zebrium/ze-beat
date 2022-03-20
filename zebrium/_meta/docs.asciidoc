@@ -1,0 +1,7 @@
+include::{libbeat-dir}/shared/integration-link.asciidoc[]
+
+:modulename!:
+
+The Zebrium module uses http://www.zebrium.com/management.html[HTTP API] created by the management plugin to collect metrics.
+
+The default metricsets are `logs` and `detections`.
