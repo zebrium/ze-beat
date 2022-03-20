@@ -60,17 +60,24 @@ main() {
     cd ${GOPATH}/src/${PROJECT}
     $DO_UPDATE || mkdir beats
     cd beats
-    $DO_UPDATE || git init
-    $DO_UPDATE || git remote add origin https://github.com/elastic/beats.git
-    $DO_UPDATE || git fetch origin 8a60ca922f57a3ebb75e93d686a98edf83c766da
-    $DO_UPDATE || git reset --hard FETCH_HEAD
+    if ! $DO_UPDATE; then
+        git init
+	git remote add origin https://github.com/elastic/beats.git
+	git fetch origin 8a60ca922f57a3ebb75e93d686a98edf83c766da
+	git reset --hard FETCH_HEAD
+    fi
     cd metricbeat
-    $DO_UPDATE || git clone ${GIT_REPO_BASE_URL}/zebeat.git
-    $DO_UPDATE || (cd ..; patch -p1 < metricbeat/zebeat/metricbeat_patch.diff)
-    $DO_UPDATE || mv zebeat/zebrium module
-    $DO_UPDATE || rm -rf modules.d
-    $DO_UPDATE || mkdir modules.d
-    $DO_UPDATE || cp module/zebrium/_meta/config.yml modules.d/zebrium.yml
+    if ! $DO_UPDATE; then
+	git clone ${GIT_REPO_BASE_URL}/zebeat.git
+	(cd ..; patch -p1 < metricbeat/zebeat/metricbeat_patch.diff)
+	mv zebeat/zebrium module
+	rm -rf modules.d
+	mkdir modules.d
+	cp module/zebrium/_meta/config.yml modules.d/zebrium.yml
+	chmod go-w metricbeat.yml
+	chmod go-w module/zebrium/module.yml
+	chmod go-w modules.d/zebrium.yml
+    fi
     go install
     exit
 
