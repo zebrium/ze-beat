@@ -15,29 +15,10 @@
 // specific language governing permissions and limitations
 // under the License.
 
-package zebrium
+package detections
 
-import (
-	"github.com/elastic/beats/v7/metricbeat/mb/parse"
-)
+// Config for detections metricset
+type Config struct {
+}
 
-// Subpaths to management plugin endpoints
-const (
-	LogsPath       = "/mwsd/v1/statsmi/read"
-	DetectionsPath = "/mwsd/v1/incident/read/summary"
-)
-
-const (
-	defaultScheme = "http"
-	pathConfigKey = "management_path_prefix"
-)
-
-var (
-	// HostParser parses host urls for Zebrium management plugin
-	HostParser = parse.URLHostParserBuilder{
-		DefaultScheme:   defaultScheme,
-		PathConfigKey:   pathConfigKey,
-		DefaultUsername: "guest",
-		DefaultPassword: "guest",
-	}.Build()
-)
+var defaultConfig = Config{}

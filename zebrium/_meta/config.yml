@@ -1,7 +1,7 @@
 - module: zebrium
   metricsets:
     - "logs"
-    #- "detections"
+    - "detections"
   enabled: true
   period: 10s
   hosts: ["https://echo.qa.zebrium.com"]

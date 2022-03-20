@@ -1,12 +1,13 @@
 diff --git a/metricbeat/include/list_common.go b/metricbeat/include/list_common.go
-index d57ebf463..1ebe3d5c2 100644
+index d57ebf463..e951dfcde 100644
 --- a/metricbeat/include/list_common.go
 +++ b/metricbeat/include/list_common.go
-@@ -181,6 +181,8 @@ import (
+@@ -181,6 +181,9 @@ import (
  	_ "github.com/elastic/beats/v7/metricbeat/module/windows"
  	_ "github.com/elastic/beats/v7/metricbeat/module/windows/perfmon"
  	_ "github.com/elastic/beats/v7/metricbeat/module/windows/service"
 +	_ "github.com/elastic/beats/v7/metricbeat/module/zebrium"
++	_ "github.com/elastic/beats/v7/metricbeat/module/zebrium/detections"
 +	_ "github.com/elastic/beats/v7/metricbeat/module/zebrium/logs"
  	_ "github.com/elastic/beats/v7/metricbeat/module/zookeeper"
  	_ "github.com/elastic/beats/v7/metricbeat/module/zookeeper/connection"
