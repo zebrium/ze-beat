@@ -10,4 +10,4 @@ RUN cat /home/zebrium/.bashrc >> /root/.bashrc
 COPY --chown=1000:1000 ./metricbeat /usr/local/bin
 
 # USER 1000:1000
-ENTRYPOINT ["/usr/local/bin/metricbeat run --e"]
+ENTRYPOINT ["/usr/local/bin/metricbeat", "run", "--e"]

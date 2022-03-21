@@ -1,36 +1,11 @@
 version: '3.5'
 services:
-  mwsd:
-    hostname: "customer${ZE_CUSTOMER_NAME:-zebrium}_mwsd"
-    image: "${REGISTRY_SERVER_URL:-872295030327.dkr.ecr.us-west-2.amazonaws.com/zebrium}/mwsd:${BUILDID:-latest}"
+  zebeat:
+    hostname: "customer${ZE_CUSTOMER_NAME:-zebrium}_zebeat"
+    image: "${REGISTRY_SERVER_URL:-872295030327.dkr.ecr.us-west-2.amazonaws.com/zebrium}/zebeat:${BUILDID:-latest}"
     privileged: true
     restart: "${DOCKER_RESTART_POLICY}"
-    ports:
-      - ${ZWSD_PORT:-443}:443
-    environment:
-      VSQL_HOST: ${VSQL_HOST:-vertica}
-      VSQL_PORT: ${VSQL_PORT:-5433}
-      VSQL_USER: ${VSQL_USER:-webuser}
-      VSQL_PASSWORD: ${VSQL_PASSWORD:-password}
-      VSQL_DATABASE: ${VSQL_DATABASE:-zdb}
-      VSQL_LOADBALANCE: 0
-      VSQL_SSLMODE: ${VSQL_SSLMODE:-disable}
-      ZWSD_HOST: ""
-      ZWSD_PORT: 443
-      ZWSD_DOMAINS: "${ZWSD_DOMAINS:-pc-alan.eng.zebrium.com}"
-      ZWSD_ORIGIN_PORT: "${ZWSD_ORIGIN_PORT:-443}"
-      ZWSD_UIDIR: ""
-      ZWSD_SQLDIR: /var/lib/mwsd/sql
-      ZWSD_PROTOCOL: "${ZWSD_PROTOCOL:-https}"
-      ZWSD_ORIGIN_PROTOCOL: "${ZWSD_ORIGIN_PROTOCOL:-https}"
-      ZWSD_DEBUG: "${ZWSD_DEBUG:-true}"
-      ZWSD_SSL_DIR: "/ssl"
-      ZWSD_GRAFANA_DIR: "${ZWSD_GRAFANA_DIR}:-"
-      ZWSD_SCHEMA_VERSION: "${ZWSD_SCHEMA_VERSION:-_extern_latest}"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "${MAX_CONTAINER_LOG_SZ:-1m}"
-        max-file: "${MAX_CONTAINER_LOG_FILES:-10}"
     volumes:
-      - ${PWD}/ssl:/ssl
+      - ${PWD}/metricbeat.yml:/metricbeat.yml
+      - ${PWD}/zebrium.yml:/modules.d/zebrium.yml
+      - ${PWD}/access_tokens.yml:/access_tokens.yml
