@@ -1,0 +1,14 @@
+export AWS_PROFILE=s3
+export PATH=$PATH:$HOME/.local/bin:/opt/vertica/bin
+export ZWSD_UPLOAD_DIR=${ZWSD_UPLOAD_DIR:-/uploads} # FIXME - need a better default location
+
+if [ -n "${S3_UPLOAD_BUCKET}" ] && [ ! -f $HOME/.aws/config ]; then
+    mkdir -p $HOME/.aws
+    cat > $HOME/.aws/config << EOF
+[default]
+region = us-west-2
+[profile s3]
+aws_access_key_id = ${S3_ACCESS_KEY_ID}
+aws_secret_access_key = ${S3_SECRET_ACCESS_KEY}
+EOF
+fi

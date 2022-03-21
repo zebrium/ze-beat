@@ -79,42 +79,26 @@ main() {
         chmod go-w modules.d/zebrium.yml
     fi
     go install
-    exit
-
-    # MWSD
-    #
-    cd ${GOPATH}/src/${PROJECT}
-    cd mwsd
-    git pull
-    set_tag
-    export MWSD_COMMIT_ID=`/auto/share/bin/git_commit_id.sh`
-    local IMAGE_BUILD_ID=`/auto/share/bin/build_id.sh`
-    cat > link/software_version.go <<EOF
-package link
-const CSoftwareCommits = "${GO_RAML_COMMIT_ID} ${MWSD_COMMIT_ID}"
-const CSoftwareRelease = "${BUILDID}"
-EOF
-    mo-raml server -l go --dir mwsd --no-apidocs --import-path ${PROJECT}/mwsd/mwsd --link-path ${PROJECT}/mwsd/link --ramlfile mwsd.raml
-    (cd mwsd; export GO111MODULE=off;go install)
-    (cd mwinit; export GO111MODULE=off;go install)
 
     # DOCKER IMAGE
     #
     export REGISTRY=872295030327.dkr.ecr.us-west-2.amazonaws.com/zebrium
-    cd ${GOPATH}/src/${PROJECT}/mwsd/docker
-    cp ${GOPATH}/bin/mwsd .
-    cp ${GOPATH}/bin/mwinit .
+    cd ${GOPATH}/src/${PROJECT}/elastic/beats/metricbeat/zebeat
+    export ZEBEAT_COMMIT_ID=`git log -n 1 --pretty=format:"%H"`
+    export DATE="$(/bin/date +%Y-%m-%d-%H-%M-%S)"
+    export IMGAGE_BUILD_ID="${COMMIT_ID}_${DATE}_$(hostname)_$(whoami)"
 
     # BUILDID is actual release name.
-    docker build -t ${REGISTRY}/mwsd:${BUILDID} \
+    cd docker
+    cp ${GOPATH}/bin/zebeat .
+    docker build -t ${REGISTRY}/zebeat:${BUILDID} \
                  --label "com.zebrium.build.id=$IMAGE_BUILD_ID"                      \
                  --label "com.zebrium.build.release=$BUILDID"                        \
-                 --label "com.zebrium.software.mo-raml.revision=$GO_RAML_COMMIT_ID"  \
-                 --label "com.zebrium.software.mwsd.revision=$MWSD_COMMIT_ID"        \
+                 --label "com.zebrium.software.zebeat.revision=$ZEBEAT_COMMIT_ID"    \
                  --build-arg "RELEASE=$BASEOS_VERS" .
 
     if $DO_PUSH; then
-        docker push ${REGISTRY}/mwsd:${BUILDID}
+        docker push ${REGISTRY}/zebeat:${BUILDID}
     fi
     echo export BUILDID=${BUILDID}
 }
