@@ -87,25 +87,30 @@ func eventMapping(content []byte, lastTs *time.Time) ([]mb.Event, error) {
 			*lastTs = bucket.Inci_ts
 		}
 		fmt.Println(bucket)
+		svc_grp, includes_default := serviceGroupFromGroups(bucket.Inci_svc_grps)
 		event := mb.Event{
 			Namespace: "detections",
 			Timestamp: bucket.Inci_ts,
-			MetricSetFields: common.MapStr{
+			ModuleFields: common.MapStr{
 				"deployment_id": bucket.Deployment_id,
-				"title":         bucket.Itype_title,
-				"significance":  bucket.Inci_significance,
-				"report_url":    bucket.Inci_report_url,
-				"occurrence":    common.MapStr{"count": bucket.Inci_itype_occ},
+				"service_group": svc_grp,
+			},
+			MetricSetFields: common.MapStr{
+				"includes_default": includes_default,
+				"deployment_id":    bucket.Deployment_id,
+				"title":            bucket.Itype_title,
+				"significance":     bucket.Inci_significance,
+				"report_url":       bucket.Inci_report_url,
+				"occurrence":       common.MapStr{"count": bucket.Inci_itype_occ},
+				"word_cloud":       words(bucket.Inci_words),
 			},
 		}
-		serviceGroupFromGroups(event.MetricSetFields, bucket.Inci_svc_grps)
-		words(event.MetricSetFields, bucket.Inci_words)
 		events = append(events, event)
 	}
 	return events, nil
 }
 
-func serviceGroupFromGroups(base common.MapStr, inci_svc_grps string) {
+func serviceGroupFromGroups(inci_svc_grps string) (string, bool) {
 	svc_grp := ""
 	includes_default := false
 	for _, grp := range strings.Split(inci_svc_grps, ",") {
@@ -119,16 +124,17 @@ func serviceGroupFromGroups(base common.MapStr, inci_svc_grps string) {
 			svc_grp = grp
 		}
 	}
-	base.Put("includes_default", includes_default)
-	base.Put("service_group", svc_grp)
+	return svc_grp, includes_default
 }
 
-func words(base common.MapStr, words []Word) {
+func words(words []Word) []common.MapStr {
+	out := []common.MapStr{}
 	for _, word := range words {
-		base.Put("work_cloud", common.MapStr{
+		out = append(out, common.MapStr{
 			"b": word.B,
 			"s": word.S,
 			"w": word.W,
 		})
 	}
+	return out
 }
