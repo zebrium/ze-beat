@@ -83,14 +83,14 @@ main() {
     # DOCKER IMAGE
     #
     export REGISTRY=872295030327.dkr.ecr.us-west-2.amazonaws.com/zebrium
-    cd ${GOPATH}/src/${PROJECT}/elastic/beats/metricbeat/zebeat
+    cd ${GOPATH}/src/${PROJECT}/beats/metricbeat/zebeat
     export ZEBEAT_COMMIT_ID=`git log -n 1 --pretty=format:"%H"`
     export DATE="$(/bin/date +%Y-%m-%d-%H-%M-%S)"
     export IMGAGE_BUILD_ID="${COMMIT_ID}_${DATE}_$(hostname)_$(whoami)"
 
     # BUILDID is actual release name.
     cd docker
-    cp ${GOPATH}/bin/zebeat .
+    cp ${GOPATH}/bin/metricbeat .
     docker build -t ${REGISTRY}/zebeat:${BUILDID} \
                  --label "com.zebrium.build.id=$IMAGE_BUILD_ID"                      \
                  --label "com.zebrium.build.release=$BUILDID"                        \
