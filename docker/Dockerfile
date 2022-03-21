@@ -8,6 +8,6 @@ COPY --chown=1000:1000 ./bashrc /home/zebrium/.bashrc
 RUN cat /home/zebrium/.bashrc >> /root/.bashrc
 
 COPY --chown=1000:1000 ./metricbeat /usr/local/bin
+COPY --chown=1000:1000 ./docker-entrypoint.sh /usr/local/bin
 
-# USER 1000:1000
-ENTRYPOINT ["/usr/local/bin/metricbeat", "run", "--e"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

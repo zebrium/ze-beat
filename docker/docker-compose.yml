@@ -6,6 +6,4 @@ services:
     privileged: true
     restart: "${DOCKER_RESTART_POLICY}"
     volumes:
-      - ${PWD}/metricbeat.yml:/metricbeat.yml
-      - ${PWD}/zebrium.yml:/modules.d/zebrium.yml
-      - ${PWD}/access_tokens.yml:/access_tokens.yml
+      - ${PWD}/config:/config
