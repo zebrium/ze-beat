@@ -88,13 +88,14 @@ func eventMapping(content []byte, lastTs *time.Time) ([]mb.Event, error) {
 		}
 		fmt.Println(bucket)
 		event := mb.Event{
-			Index:     bucket.Deployment_id,
 			Namespace: "detections",
 			Timestamp: bucket.Inci_ts,
 			MetricSetFields: common.MapStr{
-				"title":        bucket.Itype_title,
-				"significance": bucket.Inci_significance,
-				"report_url":   bucket.Inci_report_url,
+				"deployment_id": bucket.Deployment_id,
+				"title":         bucket.Itype_title,
+				"significance":  bucket.Inci_significance,
+				"report_url":    bucket.Inci_report_url,
+				"occurrence":    common.MapStr{"count": bucket.Inci_itype_occ},
 			},
 		}
 		serviceGroupFromGroups(event.MetricSetFields, bucket.Inci_svc_grps)

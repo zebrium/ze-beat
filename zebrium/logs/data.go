@@ -69,10 +69,10 @@ func eventMapping(content []byte, lastTs *time.Time) ([]mb.Event, error) {
 		}
 		fmt.Println(bucket)
 		event := mb.Event{
-			Index:     bucket.Deployment_id,
 			Namespace: "logs",
 			Timestamp: bucket.Mi,
 			MetricSetFields: common.MapStr{
+				"deployment_id": bucket.Deployment_id,
 				"service_group": bucket.Svc_grp,
 				"total":         common.MapStr{"count": bucket.Evt_ct},
 				"errors":        common.MapStr{"count": bucket.Evt_error_ct},
