@@ -29,13 +29,13 @@ import (
 )
 
 type StatsMi struct {
-	Customer      string    `json:"customer" db:"customer" validate:"nonzero"`
-	Deployment_id string    `json:"deployment_id" db:"deployment_id" validate:"nonzero"`
-	Evt_ct        int64     `json:"evt_ct" db:"evt_ct" validate:"nonzero"`
-	Evt_error_ct  int64     `json:"evt_error_ct" db:"evt_error_ct" validate:"nonzero"`
-	Evt_rare_ct   int64     `json:"evt_rare_ct" db:"evt_rare_ct" validate:"nonzero"`
-	Mi            time.Time `json:"mi" db:"mi" validate:"nonzero"`
-	Svc_grp       string    `json:"svc_grp" db:"svc_grp" validate:"nonzero"`
+	Customer     string    `json:"customer" db:"customer" validate:"nonzero"`
+	Deployment   string    `json:"deployment_id" db:"deployment_id" validate:"nonzero"`
+	Evt_ct       int64     `json:"evt_ct" db:"evt_ct" validate:"nonzero"`
+	Evt_error_ct int64     `json:"evt_error_ct" db:"evt_error_ct" validate:"nonzero"`
+	Evt_rare_ct  int64     `json:"evt_rare_ct" db:"evt_rare_ct" validate:"nonzero"`
+	Mi           time.Time `json:"mi" db:"mi" validate:"nonzero"`
+	Svc_grp      string    `json:"svc_grp" db:"svc_grp" validate:"nonzero"`
 }
 
 type Error struct {
@@ -72,7 +72,8 @@ func eventMapping(content []byte, lastTs *time.Time) ([]mb.Event, error) {
 			Namespace: "logs",
 			Timestamp: bucket.Mi,
 			ModuleFields: common.MapStr{
-				"deployment_id": bucket.Deployment_id,
+				"customer":      bucket.Customer,
+				"deployment":    bucket.Deployment,
 				"service_group": bucket.Svc_grp,
 			},
 			MetricSetFields: common.MapStr{

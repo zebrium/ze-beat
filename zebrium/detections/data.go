@@ -44,7 +44,8 @@ type Word struct {
 }
 
 type InciSummary struct {
-	Deployment_id     string                           `json:"deployment_id" db:"deployment_id" validate:"nonzero"`
+	Customer          string                           `json:"customer" db:"customer" validate:"nonzero"`
+	Deployment        string                           `json:"deployment_id" db:"deployment_id" validate:"nonzero"`
 	Inci_id           string                           `json:"inci_id" db:"inci_id" validate:"nonzero"`
 	Inci_itype_occ    int64                            `json:"inci_itype_occ" db:"inci_itype_occ" validate:"nonzero"`
 	Inci_report_url   string                           `json:"inci_report_url" db:"inci_report_url" validate:"nonzero"`
@@ -92,12 +93,12 @@ func eventMapping(content []byte, lastTs *time.Time) ([]mb.Event, error) {
 			Namespace: "detections",
 			Timestamp: bucket.Inci_ts,
 			ModuleFields: common.MapStr{
-				"deployment_id": bucket.Deployment_id,
+				"customer":      bucket.Customer,
+				"deployment":    bucket.Deployment,
 				"service_group": svc_grp,
 			},
 			MetricSetFields: common.MapStr{
 				"includes_default": includes_default,
-				"deployment_id":    bucket.Deployment_id,
 				"title":            bucket.Itype_title,
 				"significance":     bucket.Inci_significance,
 				"report_url":       bucket.Inci_report_url,
