@@ -4,5 +4,5 @@
     - "detections"
   enabled: true
   period: 10s
-  hosts: ["https://pc-alan.eng.zebrium.com:4000/delta"]
+  hosts: ["https://echo.qa.zebrium.com"]
   access_tokens_file: "access_tokens.yml"

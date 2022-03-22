@@ -7,3 +7,4 @@ services:
     restart: "${DOCKER_RESTART_POLICY}"
     volumes:
       - ${PWD}/config:/config
+      - ${PWD}/access_tokens.yml:/access_tokens.yml
