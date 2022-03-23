@@ -45,7 +45,7 @@ type Word struct {
 
 type InciSummary struct {
 	Customer          string                           `json:"customer" db:"customer" validate:"nonzero"`
-	Deployment        string                           `json:"deployment_id" db:"deployment_id" validate:"nonzero"`
+	Deployment        string                           `json:"deployment" db:"deployment" validate:"nonzero"`
 	Inci_id           string                           `json:"inci_id" db:"inci_id" validate:"nonzero"`
 	Inci_itype_occ    int64                            `json:"inci_itype_occ" db:"inci_itype_occ" validate:"nonzero"`
 	Inci_report_url   string                           `json:"inci_report_url" db:"inci_report_url" validate:"nonzero"`

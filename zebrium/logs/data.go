@@ -30,7 +30,7 @@ import (
 
 type StatsMi struct {
 	Customer     string    `json:"customer" db:"customer" validate:"nonzero"`
-	Deployment   string    `json:"deployment_id" db:"deployment_id" validate:"nonzero"`
+	Deployment   string    `json:"deployment" db:"deployment" validate:"nonzero"`
 	Evt_ct       int64     `json:"evt_ct" db:"evt_ct" validate:"nonzero"`
 	Evt_error_ct int64     `json:"evt_error_ct" db:"evt_error_ct" validate:"nonzero"`
 	Evt_rare_ct  int64     `json:"evt_rare_ct" db:"evt_rare_ct" validate:"nonzero"`
