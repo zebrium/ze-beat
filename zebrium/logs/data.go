@@ -79,7 +79,7 @@ func eventMapping(content []byte, lastTs *time.Time) ([]mb.Event, error) {
 			MetricSetFields: common.MapStr{
 				"total":     common.MapStr{"count": bucket.Evt_ct},
 				"errors":    common.MapStr{"count": bucket.Evt_error_ct},
-				"anamalies": common.MapStr{"count": bucket.Evt_rare_ct},
+				"anomalies": common.MapStr{"count": bucket.Evt_rare_ct},
 			},
 		}
 		events = append(events, event)
