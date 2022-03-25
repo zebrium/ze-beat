@@ -22,6 +22,8 @@ pipeline {
                     newVersion = oldVersion
                     //TODO: Increment this based on tagged version
                     newVersion = sh (script: "echo ${newVersion} | awk -F. -v OFS=. '{\$2++;\$NF=0;print}'", returnStdout:  true).trim()
+                    echo "Updating Version of Plugin"
+                    sh """sed -i 's/${oldVersion}/${newVersion}/g' version.txt"""
                 }
                 buildName "${newVersion}"
             }
@@ -44,6 +46,17 @@ pipeline {
         stage('Publish Docker Image') {
             steps {
                 publishDockerImages(newVersion, false, pipeLineYaml.id, repos)
+            }
+        }
+        stage ('Push new Version'){
+            steps{
+                script{
+                    echo "Publishing New version to bitbucket"
+                    sh """git config user.email "jenkins@zebrium.com" && git config user.name "Jenkins" && git commit -am "Updated version to ${newVersion} from ${oldVersion}" """
+                    sshagent(['bitbucket']) {
+                        sh 'git push --set-upstream origin $BRANCH_NAME'
+                    }
+                }
             }
         }
     }
