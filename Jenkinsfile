@@ -37,13 +37,13 @@ pipeline {
             steps {
                 script {
                    sh "aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 872295030327.dkr.ecr.us-west-2.amazonaws.com"
-                   sh "docker build -t ${pipeLineYaml.id}:${tag} --network host . --no-cache"
+                   sh "docker build -t ${pipeLineYaml.id}:${newVersion} --network host . --no-cache"
                 }
             }
         }
         stage('Publish Docker Image') {
             steps {
-                publishDockerImages(tag, false, pipeLineYaml.id, repos)
+                publishDockerImages(newVersion, false, pipeLineYaml.id, repos)
             }
         }
     }
