@@ -1,7 +1,8 @@
 @Library('cicd') _
 def pipeLineYaml
 def buildID
-def semver
+def oldVersion
+def newVersion
 def repos
 pipeline {
     agent any
@@ -18,7 +19,7 @@ pipeline {
             steps {
                 script {
                     buildtime = env.BUILD_TIMESTAMP_CI
-                    def oldVersion = sh (script: "sed -n '1p' version.txt", returnStdout: true).trim()
+                    oldVersion = sh (script: "sed -n '1p' version.txt", returnStdout: true).trim()
                     newVersion = oldVersion
                     //TODO: Increment this based on tagged version
                     newVersion = sh (script: "echo ${newVersion} | awk -F. -v OFS=. '{\$2++;\$NF=0;print}'", returnStdout:  true).trim()
