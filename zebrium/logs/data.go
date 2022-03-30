@@ -77,7 +77,7 @@ func eventMapping(content []byte, lastTs *time.Time) ([]mb.Event, error) {
 				"service_group": bucket.Svc_grp,
 			},
 			MetricSetFields: common.MapStr{
-				"total":     common.MapStr{"count": bucket.Evt_ct},
+				"all":       common.MapStr{"count": bucket.Evt_ct},
 				"errors":    common.MapStr{"count": bucket.Evt_error_ct},
 				"anomalies": common.MapStr{"count": bucket.Evt_rare_ct},
 			},
