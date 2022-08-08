@@ -1,6 +1,7 @@
 FROM golang:1.17 as builder
+ARG BEAT_VERSION=v7.17.5
 RUN apt-get update && apt-get install patch -y
-RUN git clone https://github.com/elastic/beats.git
+RUN git clone -b $BEAT_VERSION https://github.com/elastic/beats.git
 WORKDIR beats
 COPY metricbeat_patch.diff .
 RUN patch -p1 < metricbeat_patch.diff

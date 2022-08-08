@@ -4,5 +4,5 @@
     - "detections"
   enabled: true
   period: 10s
-  hosts: ["https://echo.qa.zebrium.com"]
+  hosts: ["https://cloud.zebrium.com"]
   access_tokens_file: "/access_tokens.yml"
