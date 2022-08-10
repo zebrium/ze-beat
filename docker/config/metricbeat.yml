@@ -104,7 +104,7 @@ setup.kibana:
 # ------------------------------ Logstash Output -------------------------------
 output.logstash:
   # The Logstash hosts
-  hosts: ["logstash.qa.zebrium.com:5044"]
+  #hosts: [""]
 
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications
@@ -186,4 +186,3 @@ processors:
 
 # This allows to enable 6.7 migration aliases
 #migration.6_to_7.enabled: true
-

@@ -2,7 +2,7 @@ version: '3.5'
 services:
   zebeat:
     hostname: "customer${ZE_CUSTOMER_NAME:-zebrium}_zebeat"
-    image: "${REGISTRY_SERVER_URL:-872295030327.dkr.ecr.us-west-2.amazonaws.com/zebrium}/zebeat:${BUILDID:-latest}"
+    image: "zebrium/zebeat:latest"
     privileged: true
     restart: "${DOCKER_RESTART_POLICY}"
     volumes:
